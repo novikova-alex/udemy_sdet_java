@@ -10,7 +10,7 @@ public class SplitWords {
 		System.out.print("Please, enter any text: ");
 		String userInput = sc.nextLine();
 		System.out.print("You entered these words: ");
-		System.out.println(Arrays.toString(userInput.split("[\\,, ., \\s, !, ?]"))); //TODO
+		System.out.println(Arrays.toString(userInput.split("[\\p{P}\\s]+"))); //TODO
 	}
 
 }
