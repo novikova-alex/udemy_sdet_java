@@ -76,15 +76,16 @@ public class MatrixRotation {
 		printMatrixToConsole(newMatrix);
 	}
 
-	public static void rotate270(double[][] matrix) {//TODO
-		double[][] newMatrix = new double[matrix.length][matrix.length];
-		for(int i = 0, j = matrix.length-1; i < matrix.length; i++, j-- ) {
-			for(int c = 0, d = matrix.length-1; c >= matrix.length; c++, d-- ) {
-				newMatrix[j][d] = matrix[i][c];
-				System.out.print(newMatrix[j][d]);
+	public static void rotate270(double[][] matrix) {
+		double temp;
+		for (int i = 0; i < matrix.length / 2; i++) {
+			for (int j = 0; j < matrix.length; j++) {
+				temp = matrix[i][j];
+				matrix[i][j] = matrix[matrix.length - 1 - i][j];
+				matrix[matrix.length - 1 - i][j] = temp;
 			}
 		}
-		printMatrixToConsole(newMatrix);
+		printMatrixToConsole(matrix);
 	}
 	
 	private static boolean rotateMatrix(double[][] matrix, int mode) {
