@@ -57,7 +57,46 @@ public class ConvertDecimalToRoman {
 	 * @return string of Roman number.
 	 */
 	public static String decimal2Roman(int number) {
-		<write your code here>
+		String romanNumber = "";
+		while(number > 0) {
+			if (number == 100) {
+				romanNumber += "C";
+				number -= 100; 
+			}
+			else if (number >= 90) {
+				romanNumber += "XC";
+				number -= 90; 
+			}
+			else if (number >= 50) {
+				romanNumber += "L";
+				number -= 50; 
+			}
+			else if (number >= 40) {
+				romanNumber += "XL";
+				number -= 40; 
+			}
+			else if (number >= 10) {
+				romanNumber += "X";
+				number -= 10; 
+			}
+			else if (number >= 9) {
+				romanNumber += "IX";
+				number -= 9; 
+			}
+			else if (number >= 5) {
+				romanNumber += "V";
+				number -= 5; 
+			}
+			else if (number >= 4) {
+				romanNumber += "IV";
+				number -= 4; 
+			}
+			else if (number >= 1) {
+				romanNumber += "I";
+				number -= 1; 
+			}
+		}
+		return romanNumber;
 	}
 
 	/**
@@ -65,15 +104,22 @@ public class ConvertDecimalToRoman {
 	 * 
 	 * Takes string value with Roman number as a parameter.
 	 * 
-	 * At first method validates if input string could be Roman number. After method
+	 * Method
 	 * uses algorithm to convert Roman numeral to decimal.
+	 * I	V	X	L	C	
+1	5	10	50	100	
+
 	 * 
 	 * @param romanNumber
 	 * @return decimal representation of Roman number
 	 */
 
 	public static int roman2Decimal(String romanNumber) {
-		<write your code here>
+		int decimalNumber = 0;
+
+		
+		
+		return decimalNumber;  //TODO
 	}
 
 
@@ -87,7 +133,11 @@ public class ConvertDecimalToRoman {
 	 * @return true if String is Roman number
 	 */
 	public static boolean isRomanNumberValid(String romanNumber) {
-	    <write your code here>
+		if(romanNumber.isEmpty()) 
+			return false;
+	   if (!romanNumber.matches("[IVXLCDM]*")) 
+		   return false;
+	   return true;
 	}
 	
 	
@@ -101,6 +151,8 @@ public class ConvertDecimalToRoman {
 	 * @return true if String is Roman number
 	 */
 	public static boolean isDecimalNumberValid(int decimalNumber) {
-		<write your code here>
+		if (decimalNumber > 100 || decimalNumber <= 0)
+			   return false;
+		   else return true;
 	}
 }
