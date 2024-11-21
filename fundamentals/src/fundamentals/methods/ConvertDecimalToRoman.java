@@ -106,9 +106,6 @@ public class ConvertDecimalToRoman {
 	 * 
 	 * Method
 	 * uses algorithm to convert Roman numeral to decimal.
-	 * I	V	X	L	C	
-1	5	10	50	100	
-
 	 * 
 	 * @param romanNumber
 	 * @return decimal representation of Roman number
@@ -117,9 +114,22 @@ public class ConvertDecimalToRoman {
 	public static int roman2Decimal(String romanNumber) {
 		int decimalNumber = 0;
 
+		for(int i = romanNumber.length()-1; i >= 0; i--) {
+			if(romanNumber.charAt(i) == 'I')
+				decimalNumber += 1 * (decimalNumber >= 5 ? -1 : 1);
+			else if (romanNumber.charAt(i) == 'V')
+				decimalNumber += 5 * (decimalNumber >= 10 ? -1 : 1);
+			else if (romanNumber.charAt(i) == 'X')
+				decimalNumber += 10 * (decimalNumber >= 50 ? -1 : 1);
+			else if (romanNumber.charAt(i) == 'L')
+				decimalNumber += 50 * (decimalNumber >= 100 ? -1 : 1);
+			if (romanNumber.charAt(i) == 'C') {
+				decimalNumber =100;
+				break;
+			}
+		}
 		
-		
-		return decimalNumber;  //TODO
+		return decimalNumber;  
 	}
 
 
@@ -135,7 +145,7 @@ public class ConvertDecimalToRoman {
 	public static boolean isRomanNumberValid(String romanNumber) {
 		if(romanNumber.isEmpty()) 
 			return false;
-	   if (!romanNumber.matches("[IVXLCDM]*")) 
+	   if (!romanNumber.matches("[IVXLC]*")) 
 		   return false;
 	   return true;
 	}
