@@ -1,10 +1,18 @@
 package fundamentals.paymentsandtransactions;
 
+import java.util.Arrays;
+
 public class Account {
+	
+	final int DEFAULT_TRANSACTIONS_NUMBER = 10;
 	
 	private int id;
 	private static Transaction[] transactions;
-	private int transactionIndex = 0;
+	private static int transactionIndex = 0;
+
+	{
+		transactions = new Transaction[DEFAULT_TRANSACTIONS_NUMBER];
+	}
 	
 	public Account(int id) {
 		super();
@@ -12,31 +20,39 @@ public class Account {
 	}
 
 	public void sendMoneyToAccount(Account accountTo, double moneyAmount) {
-	    Transaction tr = new Transaction(this, accountTo, moneyAmount, StandardAccountOperations.MONEY_TRANSFER_SEND);
-	    accountTo.receiveMoney(accountTo, moneyAmount);
-	    addTransaction(tr);
+	    Transaction transaction = new Transaction(this, accountTo, moneyAmount, StandardAccountOperations.MONEY_TRANSFER_SEND);
+	    addTransaction(transaction);
+	    accountTo.receiveMoney(this, moneyAmount);
 	}
 	
-	//TODO error in transaction adding. 
-	private void addTransaction(Transaction tr) {
-		transactions[transactionIndex] = tr;
+	private void addTransaction(Transaction transaction) {
+		transactions[transactionIndex] = transaction;
 		transactionIndex++;
 		
 	}
 
 	public void receiveMoney(Account account, double moneyAmount) {
-		Transaction tr = new Transaction(this, account, moneyAmount, StandardAccountOperations.MONEY_TRANSFER_RECEIVE);
-	    addTransaction(tr);
+		Transaction transaction = new Transaction(this, account, moneyAmount, StandardAccountOperations.MONEY_TRANSFER_RECEIVE);
+	    addTransaction(transaction);
 		
 	}
 
 	public void withdrawMoney(double moneyAmount) {
-		Transaction tr = new Transaction(this, moneyAmount, StandardAccountOperations.WITHDRAW);
-	    addTransaction(tr);
+		Transaction transaction = new Transaction(this, moneyAmount, StandardAccountOperations.WITHDRAW);
+	    addTransaction(transaction);
 	}
 	
 	public Transaction[] getTransactions() {
-		return transactions;
+	    Transaction[] tempTransactions = new Transaction[transactionIndex]; 
+	    int j = 0;
+	    
+	    for (int i = 0; i < transactionIndex; i++) {
+	        if (transactions[i].getAccountFrom().equals(this)) {
+	            tempTransactions[j++] = transactions[i];
+	        }    
+	    }
+
+	    return Arrays.copyOf(tempTransactions, j);
 	}
 	
 	public static class Transaction {
@@ -47,16 +63,12 @@ public class Account {
         
         public Transaction(Account accountFrom, Account accountTo, double moneyAmount,
 				StandardAccountOperations operation) {
-			super();
-			this.accountFrom = accountFrom;
+			this (accountFrom, moneyAmount, operation);
 			this.accountTo = accountTo;
-			this.moneyAmount = moneyAmount;
-			this.operation = operation;
 		}
 
 
 		public Transaction(Account accountFrom, double moneyAmount, StandardAccountOperations operation) {
-			super();
 			this.accountFrom = accountFrom;
 			this.moneyAmount = moneyAmount;
 			this.operation = operation;
@@ -64,8 +76,10 @@ public class Account {
 
 		@Override
 		public String toString() {
-			return "Transaction [accountFrom=" + accountFrom + ", accountTo=" + accountTo + ", moneyAmount="
-					+ moneyAmount + ", operation=" + operation + "]";
+			 return String.format("Transaction{from=%d, to=%d, amount=%.2f, operation=%s}",
+			            accountFrom != null ? accountFrom.id : -1,
+			            accountTo != null ? accountTo.id : -1,
+			            moneyAmount, operation);
 		}
 
 
