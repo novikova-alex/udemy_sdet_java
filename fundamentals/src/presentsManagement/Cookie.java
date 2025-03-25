@@ -2,6 +2,14 @@ package presentsManagement;
 
 public abstract class Cookie extends Sweet {
 
-    <write your code here>
+   private double doughWeight;
+
+public double getDoughWeight() {
+	return doughWeight;
+}
+
+public void setDoughWeight(double doughWeight) {
+	this.doughWeight = doughWeight;
+}
 	
 }
